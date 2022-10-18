@@ -24,5 +24,5 @@ router.put("/update-age-by-name-inc",controller.updateAgeBynameinc)
 router.put("/update-age-by-name-pratham/:fname/:age", controller.updateAgeByName)
 
 router.delete("/delete-by-name/:fname", controller.deleteByName)
-
+//comment
 module.exports=router
