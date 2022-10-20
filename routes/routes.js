@@ -24,5 +24,13 @@ router.put("/update-age-by-name-inc",controller.updateAgeBynameinc)
 router.put("/update-age-by-name-pratham/:fname/:age", controller.updateAgeByName)
 
 router.delete("/delete-by-name/:fname", controller.deleteByName)
+
+router.get("/query3/:str", controller.query3)
+
+router.get("/query4", controller.query4)
+
+router.get("/query5", controller.query5)
+
+router.get("/query8", controller.query8)
 //comment
 module.exports=router

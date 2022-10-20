@@ -142,6 +142,78 @@ exports.deleteByName = (req,res) => {
 }
 
 
+// q3 (regex)
+exports.query3 = (req,res) => {
+    const users = UserModel.find({lname: {$regex : ".*"+req.params.str+".*"}})
+
+    users.
+        then( (data) => {
+            res.status(200).json({
+                message:"Successfully got data where last name contains '"+req.params.str+"'",
+                data:data,
+            })
+        }).
+        catch( (error) => {
+            res.send(error)
+        })
+}
+
+// q4 (distinct)
+exports.query4 = (req,res) => {
+    const distinctAges = UserModel.distinct("age")
+    distinctAges.
+        then( (data) => {
+            res.status(200).json({
+                message:"Successfully got all distinct ages",
+                data:data,
+            })
+        }).
+        catch( (error) => {
+            res.send(error)
+        })
+
+}
+
+// q5 (aggregate) (finding sum of ages)
+exports.query5 = (req,res) => {
+    const users = UserModel.aggregate([
+        { 
+            $group: { 
+                _id : null,
+                ageSum : { $sum: "$age" } 
+            }    
+        },
+        // only showing ageSum
+        { $project: { _id :0, ageSum: 1 } }
+    ])
+
+    users.
+        then( (data) => {
+        res.status(200).json({
+            message:"Successfully got sum of ages ",
+            data : data
+        })
+    }).
+    catch( (error) => {
+        res.send(error)
+    })
+}
+
+// q8 updating (NOT WORKING (NOT ABLE TO CHANGE type of age from integer to array of integers))
+// Also, other queries will not work since we dont have field of array of integers
+exports.query8 = (req,res) => {
+    UserModel.updateMany(
+        {age:{$lt:30}}, 
+        {$set : {age: [20,25]}},
+        () => {
+            res.status(200).json({
+                message : "Updated ages for people less than 30"
+            })
+        }
+    )
+}
+
+
 
 
 
